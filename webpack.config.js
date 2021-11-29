@@ -3,7 +3,7 @@ const path = require("path");
 const config = {
   target: "electron-main",
   devtool: "source-map",
-  entry: "./src/main.ts",
+  entry: "./src/main.js",
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist")
@@ -11,16 +11,29 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader"
         }
+      },
+      {
+        test: /\\.css$/,
+        use: [
+            "style-loader",
+            {
+                loader: "css-loader",
+                options: {
+                    importLoaders: 1,
+                    modules: true,
+                },
+            },
+        ],
       }
     ]
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: [".ts", ".tsx", ".js", ".jsx"]
   },
   node: {
     __dirname: false,

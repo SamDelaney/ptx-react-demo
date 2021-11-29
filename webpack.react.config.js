@@ -6,10 +6,10 @@ const htmlPlugin = new HtmlWebPackPlugin({
   filename: "./index.html"
 });
 
-const config = {
+const config = { 
   target: "electron-renderer",
   devtool: "source-map",
-  entry: "./src/app/renderer.tsx",
+  entry: ["./src/app/renderer.jsx", "./src/app/components/Demo.css"],
   output: {
     filename: "renderer.js",
     path: path.resolve(__dirname, "dist")
@@ -17,16 +17,23 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader"
         }
+      },
+      {
+        test: /\.css$/,
+        use: [
+            "style-loader",
+            "css-loader"
+        ],
       }
     ]
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: [".ts", ".tsx", ".js", ".jsx",".css"]
   },
   plugins: [htmlPlugin],
   stats: {

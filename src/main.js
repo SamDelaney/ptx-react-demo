@@ -4,7 +4,7 @@ const { ConnectionBuilder } = require("electron-cgi");
 
 import { app, BrowserWindow } from "electron";
 
-let window: BrowserWindow | null;
+let window;
 
 const createWindow = () => {
   window = new BrowserWindow({ width: 800, height: 600 });
@@ -44,7 +44,7 @@ connection.onDisconnect = () => {
   console.log("lost");
 };
 
-connection.send("greeting", "Mom from C#", (response: any) => {
+connection.send("greeting", "Mom from C# into react", (response) => {
   window.webContents.send("greeting", response);
   connection.close();
 });
